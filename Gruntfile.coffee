@@ -7,7 +7,7 @@ module.exports = (grunt) ->
       options:
         atBegin: true
       test:
-        files: ['Gruntfile.coffee', 'src/**/*.php', 'test/**/*.php']
+        files: ['Gruntfile.coffee', 'README.md', 'src/**/*.php', 'test/**/*.php']
         tasks: ['test']
 
   grunt.loadNpmTasks 'grunt-contrib-watch'

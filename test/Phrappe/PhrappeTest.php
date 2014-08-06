@@ -3,6 +3,9 @@ namespace Phrappe;
 
 use Mockery as m;
 
+/**
+ * @backupStaticAttributes enabled
+ */
 class PhrappeTest extends \PHPUnit_Framework_TestCase
 {
     private $phrappe;
@@ -42,7 +45,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
         Phrappe::$return_result = true;
         $this->assertRegExp(
             '/June 1984/',
-            Phrappe::cal('June', '1984')->stdin
+            Phrappe::cal('June', '1984')->stdout
         );
         $this->assertRegExp(
             '/No such file or directory/',
@@ -75,7 +78,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
         $this->phrappe->return_result = true;
         $this->assertRegExp(
             '/June 1984/',
-            $this->phrappe->cal('June', '1984')->stdin
+            $this->phrappe->cal('June', '1984')->stdout
         );
         $this->assertRegExp(
             '/No such file or directory/',
@@ -97,7 +100,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
         $ph = $this->phrappe;
         $this->assertRegExp(
             '/June 1984/',
-            $ph('cal', 'June', '1984')->stdin
+            $ph('cal', 'June', '1984')->stdout
         );
         $this->assertRegExp(
             '/No such file or directory/',
@@ -126,6 +129,15 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
     public function test_instance_arguments($input, $expected)
     {
         $actual = call_user_func_array([$this->phrappe, 'echo'], $input);
+        $this->assertEquals("$expected\n", $actual);
+    }
+
+    /**
+     * @dataProvider argument_examples
+     */
+    public function test_invoke_arguments($input, $expected)
+    {
+        $actual = call_user_func_array($this->phrappe, array_merge(['echo'], $input));
         $this->assertEquals("$expected\n", $actual);
     }
 }

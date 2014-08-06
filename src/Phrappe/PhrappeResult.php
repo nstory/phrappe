@@ -3,13 +3,13 @@ namespace Phrappe;
 
 class PhrappeResult
 {
-    public $stdin;
+    public $stdout;
     public $stderr;
     public $exit_code;
 
-    public function __construct($stdin, $stderr, $exit_code)
+    public function __construct($stdout, $stderr, $exit_code)
     {
-        $this->stdin = $stdin;
+        $this->stdout = $stdout;
         $this->stderr = $stderr;
         $this->exit_code = $exit_code;
     }
