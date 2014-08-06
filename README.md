@@ -1,5 +1,10 @@
 # Phrappe
+A fun way to run shell commands from your PHP scripts.
+
 Pronounced |frap| (the same way a New Englander pronounces "milkshake!")
+
+## Installation
+Soon...
 
 ## Usage by Example
 ```php
@@ -73,3 +78,6 @@ This library uses [escapeshellarg](http://php.net/manual/en/function.escapeshell
 * [sh (Python)](https://pypi.python.org/pypi/sh) I believe this is the originator of the shell-commands-as-functions idea
 * [Shell (Perl)](http://search.cpan.org/~ferreira/Shell-0.72/Shell.pm) Actually, this package is much older (circa 1994!)
 * [ShellJS](http://documentup.com/arturadib/shelljs) While this library looks similar, it appears to actually be a Node-based quasi-reimplementation of a few Unix utilities.
+
+## License
+MIT
