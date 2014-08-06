@@ -1,5 +1,5 @@
 <?php
-namespace Nstory;
+namespace Phrappe;
 
 class TempFileTest extends \PHPUnit_Framework_TestCase
 {

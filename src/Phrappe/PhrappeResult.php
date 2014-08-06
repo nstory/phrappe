@@ -1,5 +1,5 @@
 <?php
-namespace Nstory;
+namespace Phrappe;
 
 class PhrappeResult
 {
