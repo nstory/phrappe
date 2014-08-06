@@ -31,7 +31,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
 
     /**
      * @expectedException Phrappe\PhrappeException
-     * @expectedExceptionMessage command not found
+     * @expectedExceptionMessage not found
      */
     public function test_static_non_existant_command()
     {
