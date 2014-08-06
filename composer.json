@@ -1,6 +1,6 @@
 {
     "name": "nstory/phrappe",
-    "description": "Wrapper for command-line utilities",
+    "description": "A fun way to run shell commands from your PHP scripts.",
     "license": "MIT",
     "authors": [
         {
