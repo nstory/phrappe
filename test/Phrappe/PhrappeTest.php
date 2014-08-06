@@ -1,8 +1,6 @@
 <?php
 namespace Phrappe;
 
-use Mockery as m;
-
 /**
  * @backupStaticAttributes enabled
  */
