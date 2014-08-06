@@ -6,7 +6,12 @@ A fun way to run shell commands from your PHP scripts.
 Pronounced |frap| (the same way a New Englander pronounces "milkshake!")
 
 ## Installation
-Soon...
+Add something like the following to your `composer.json` file:
+```
+"require": {
+    "nstory/phrappe": "~1"
+}
+```
 
 ## Usage by Example
 ```php
