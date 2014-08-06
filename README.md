@@ -1,7 +1,7 @@
 # Phrappe
 Pronounced |frap| (the same way a New Englander pronounces "milkshake!")
 
-# Usage by Example
+## Usage by Example
 ```php
 use Phrappe\Phrappe as ph;
 use Phrappe\PhrappeException;
@@ -63,3 +63,13 @@ $ph = new Phrappe\Phrappe;
 $greeting = $ph('echo', 'Hello, World!');
 assert("Hello, World!\n" == $greeting);
 ```
+
+## CAUTION!
+This library uses [escapeshellarg](http://php.net/manual/en/function.escapeshellarg.php) to escape special characters (quotes and such) in command parameters. This seems to work, but I would still be very cautious about passing user input to arbitrary shell commands. Programmer beware!
+
+## Similar Projects
+
+* [ShellWrap](https://github.com/MrRio/shellwrap) Phrappe is a blatant copy of this library (with, what I believe believe to be, some minor improvements)
+* [sh (Python)](https://pypi.python.org/pypi/sh) I believe this is the originator of the shell-commands-as-functions idea
+* [Shell (Perl)](http://search.cpan.org/~ferreira/Shell-0.72/Shell.pm) Actually, this package is much older (circa 1994!)
+* [ShellJS](http://documentup.com/arturadib/shelljs) While this library looks similar, it appears to actually be a Node-based quasi-reimplementation of a few Unix utilities.
