@@ -1,5 +1,5 @@
 <?php
-namespace Phrappe;
+namespace Nstory;
 
 /*
  * For creating temp files. RAII pattern. The file is automatically

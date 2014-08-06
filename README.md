@@ -3,8 +3,8 @@ Pronounced |frap| (the same way a New Englander pronounces "milkshake!")
 
 ## Usage by Example
 ```php
-use Phrappe\Phrappe as ph;
-use Phrappe\PhrappeException;
+use Nstory\Phrappe as ph;
+use Nstory\PhrappeException;
 
 // Phrappe let's you run and capture the output of external commands with ease
 
@@ -46,7 +46,7 @@ assert(preg_match('/No such file or directory/', $result->stderr));
 assert(1 == $result->exit_code);
 
 // if static methods make you uncomfortable, instatiate it:
-$ph = new Phrappe\Phrappe;
+$ph = new Nstory\Phrappe;
 $june_1984_calendar = $ph->cal('June', '1984');
 
 // the instance can be configured by setting a property:
@@ -54,12 +54,12 @@ $ph->return_result = true;
 assert(1 == $ph->cat('this_file_does_not_exists')->exit_code);
 
 // or at the time of instantiation
-$ph = new Phrappe\Phrappe(['return_result' => true]);
+$ph = new Nstory\Phrappe(['return_result' => true]);
 assert(1 == $ph->cat('this_file_does_not_exists')->exit_code);
 
 // one last way of running commands; this is useful when the command
 // name is a reserved PHP keyword:
-$ph = new Phrappe\Phrappe;
+$ph = new Nstory\Phrappe;
 $greeting = $ph('echo', 'Hello, World!');
 assert("Hello, World!\n" == $greeting);
 ```

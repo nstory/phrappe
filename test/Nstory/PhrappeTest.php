@@ -1,5 +1,5 @@
 <?php
-namespace Phrappe;
+namespace Nstory;
 
 /**
  * @backupStaticAttributes enabled
@@ -20,7 +20,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Phrappe\PhrappeException
+     * @expectedException Nstory\PhrappeException
      * @expectedExceptionCode 1
      * @expectedExceptionMessage cat: fooBARxyzzy42234242: No such file or directory
      */
@@ -30,7 +30,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Phrappe\PhrappeException
+     * @expectedException Nstory\PhrappeException
      * @expectedExceptionMessage command not found
      */
     public function test_static_non_existant_command()
@@ -59,7 +59,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
     }
 
     /**
-     * @expectedException Phrappe\PhrappeException
+     * @expectedException Nstory\PhrappeException
      * @expectedExceptionCode -1
      * @expectedExceptionMessage proc_open failed
      */
