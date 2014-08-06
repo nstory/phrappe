@@ -43,11 +43,32 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp('/June 1984/', $calendar);
     }
 
-    // public function test_instance_proc_open_fails()
-    // {
-    //     $ph = m::mock('Phrappe\Phrappe[proc_open]');
-    //     $ph->true();
-    // }
+    /**
+     * @expectedException Phrappe\PhrappeException
+     * @expectedExceptionCode -1
+     * @expectedExceptionMessage proc_open failed
+     */
+    public function test_instance_proc_open_fails()
+    {
+        $this->phrappe->proc_open = function() {
+            return false;
+        };
+        $this->phrappe->true();
+    }
+
+    public function test_instance_return_result()
+    {
+        $this->phrappe->return_result = true;
+        $this->assertRegExp(
+            '/June 1984/',
+            $this->phrappe->cal('June', '1984')->stdin
+        );
+        $this->assertRegExp(
+            '/No such file or directory/',
+            $this->phrappe->cat('fooBARxyzzy422369')->stderr
+        );
+        $this->assertEquals(1, $this->phrappe->false()->exit_code);
+    }
 
     public function test_invoke()
     {
