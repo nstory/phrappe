@@ -1,0 +1,22 @@
+{
+    "name": "nstory/phrappe",
+    "description": "Wrapper for command-line utilities",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Nathan Story",
+            "email": "nathanielstory@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-0": {
+            "Phrappe\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "~4",
+        "mockery/mockery": "~0.9"
+    }
+}
