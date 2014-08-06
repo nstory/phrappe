@@ -15,4 +15,3 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'test', ['phpunit']
   grunt.registerTask 'default', 'test'
-
