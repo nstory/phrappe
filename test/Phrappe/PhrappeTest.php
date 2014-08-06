@@ -12,7 +12,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
         $this->phrappe = new Phrappe;
     }
 
-    public function test_static_call()
+    public function test_static()
     {
         $calendar = Phrappe::cal('June', '1984');
         $this->assertRegExp('/June 1984/', $calendar);
@@ -23,7 +23,7 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
      * @expectedExceptionCode 1
      * @expectedExceptionMessage cat: fooBARxyzzy42234242: No such file or directory
      */
-    public function test_static_call_throws_exception()
+    public function test_static_throws_exception()
     {
         Phrappe::cat('fooBARxyzzy42234242'); // cat a non-existant file
     }
@@ -35,6 +35,20 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
     public function test_static_non_existant_command()
     {
         Phrappe::xyzzyfooooobar();
+    }
+
+    public function test_static_return_result()
+    {
+        Phrappe::$return_result = true;
+        $this->assertRegExp(
+            '/June 1984/',
+            Phrappe::cal('June', '1984')->stdin
+        );
+        $this->assertRegExp(
+            '/No such file or directory/',
+            Phrappe::cat('fooBARxyzzy422369')->stderr
+        );
+        $this->assertEquals(1, Phrappe::false()->exit_code);
     }
 
     public function test_instance_call()
@@ -77,11 +91,41 @@ class PhrappeTest extends \PHPUnit_Framework_TestCase
         $this->assertRegExp('/June 1984/', $calendar);
     }
 
-    public function test_invoke_escapes_arguments()
+    public function test_invoke_return_result()
     {
-        // need to use invoke b/c echo is a PHP keyword
-        $mess_of_chars = '\'"!';
+        $this->phrappe->return_result = true;
         $ph = $this->phrappe;
-        $this->assertEquals("$mess_of_chars\n", $ph('echo', $mess_of_chars));
+        $this->assertRegExp(
+            '/June 1984/',
+            $ph('cal', 'June', '1984')->stdin
+        );
+        $this->assertRegExp(
+            '/No such file or directory/',
+            $ph('cat', 'fooBARxyzzy422369')->stderr
+        );
+        $this->assertEquals(1, $ph('false')->exit_code);
+    }
+
+    public static function argument_examples()
+    {
+        return [
+            [['foo', 'bar'], 'foo bar'],
+            [['\'"!'], '\'"!'],
+            [[['foo' => true]], '--foo'],
+            [[['foo' => 'bar']], '--foo bar'],
+            [['foo', ['bar' => 'baz']], 'foo --bar baz'],
+            [[['b' => true]], '-b'],
+            [[['foo', 'bar' => 'baz']], 'foo --bar baz'],
+            [[['foo' => '\'']], '--foo \'']
+        ];
+    }
+
+    /**
+     * @dataProvider argument_examples
+     */
+    public function test_instance_arguments($input, $expected)
+    {
+        $actual = call_user_func_array([$this->phrappe, 'echo'], $input);
+        $this->assertEquals("$expected\n", $actual);
     }
 }

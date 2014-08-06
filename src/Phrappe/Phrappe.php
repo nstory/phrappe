@@ -3,16 +3,31 @@ namespace Phrappe;
 
 class Phrappe
 {
-    public $return_result = false;
+    /** @var boolean if this is true, returns a PhrappeResult instead of stdout */
+    public static $return_result = false;
+
+    /** @var callable used by unit tests; don't change this */
     public $proc_open = 'proc_open';
 
-    public function __construct()
+    private $options;
+
+    public function __construct($options=[])
     {
+        $this->options = array_merge([
+            'return_result' => false
+        ], $options);
+    }
+
+    public function __set($name, $value)
+    {
+        $this->options[$name] = $value;
     }
 
     public static function __callStatic($name, $arguments)
     {
-        $ph = new Phrappe;
+        $ph = new Phrappe([
+            'return_result' => self::$return_result
+        ]);
         return call_user_func_array([$ph, $name], $arguments);
     }
 
@@ -33,7 +48,7 @@ class Phrappe
         $stderr_file = new TempFile();
 
         // construct the command line
-        $cmd = $name . ' ' . implode(' ', array_map('escapeshellarg', $arguments));
+        $cmd = $name . ' ' . implode(' ', $this->parseArguments($arguments));
 
         // we'll feed-in stdin directly
         $descriptorspec = [
@@ -56,7 +71,7 @@ class Phrappe
         $stdout = file_get_contents($stdout_file->path);
         $stderr = file_get_contents($stderr_file->path);
 
-        if ($this->return_result) {
+        if ($this->options['return_result']) {
             return new PhrappeResult($stdout, $stderr, $exit_code);
         }
 
@@ -64,6 +79,33 @@ class Phrappe
             throw new PhrappeException($stderr, $exit_code);
         }
         return $stdout;
+    }
+
+    /**
+     * Takes an array of arguments (possibly containing nested arrays of
+     * even arguments) and converts it into a flat, escaped array of
+     * parameters ready to pass to an external command. Example:
+     * parseArguments(['foo', ['bar' => 'baz']]) -> ['foo', '--bar', 'baz']
+     * @param array $arguments
+     * @return array
+     */
+    private function parseArguments($arguments)
+    {
+        $ret = [];
+        foreach ($arguments as $key => $value) {
+            if (is_array($value)) {
+                $ret = array_merge($ret, $this->parseArguments($value));
+            } else if (is_int($key)) {
+                $ret[] = escapeshellarg($value);
+            } else {
+                $hyph = strlen($key)>1 ? '--' : '-';
+                $ret[] = "$hyph$key";
+                if ($value !== true) {
+                    $ret[] = escapeshellarg($value);
+                }
+            }
+        }
+        return $ret;
     }
 
     /**
